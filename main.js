@@ -1,81 +1,71 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 require("dotenv").config();
-const { Client, Events, GatewayIntentBits, ActivityType, GuildMember, Colors } = require("discord.js");
-
+var discord_js_1 = require("discord.js");
 // Create a new client instance
-const client = new Client({
-  intents: [
-    GatewayIntentBits.Guilds,
-    GatewayIntentBits.GuildMembers,
-    GatewayIntentBits.GuildMessageReactions,
-    GatewayIntentBits.GuildMessages,
-    GatewayIntentBits.GuildPresences,
-  ],
+var client = new discord_js_1.Client({
+    intents: [
+        discord_js_1.GatewayIntentBits.Guilds,
+        discord_js_1.GatewayIntentBits.GuildMembers,
+        discord_js_1.GatewayIntentBits.GuildMessageReactions,
+        discord_js_1.GatewayIntentBits.GuildMessages,
+        discord_js_1.GatewayIntentBits.GuildPresences,
+    ],
 });
-
 // When the client is ready, run this code (only once).
-client.once(Events.ClientReady, (readyClient) => {
-  console.log(`Ready! Logged in as ${readyClient.user.tag}`);
-
-  client.guilds.cache.forEach((guild) => {
-    updateAllPlayers(guild);
-  });
+client.once(discord_js_1.Events.ClientReady, function (readyClient) {
+    console.log("Ready! Logged in as ".concat(readyClient.user.tag));
+    client.guilds.cache.forEach(function (guild) {
+        updateAllPlayers(guild);
+    });
 });
-
 // When added to a guild, run this code (only once).
-client.on(Events.GuildCreate, (guild) => {
-  console.log(`Joined ${guild.name}`);
-  if (guild) {
-    updateAllPlayers(guild);
-  } else {
-    console.log("Guild not found.");
-  }
+client.on(discord_js_1.Events.GuildCreate, function (guild) {
+    console.log("Joined ".concat(guild.name));
+    if (guild) {
+        updateAllPlayers(guild);
+    }
+    else {
+        console.log("Guild not found.");
+    }
 });
-
 function updateAllPlayers(guild) {
-  console.log("Updating all players for guild: " + guild.name);
-  guild.members.cache.forEach((member) => {
-    if(!member.user.bot) {
-      updateRole(member);
-    }
-  });
-}
-
-/**
- * 
- * @param GuildMember member 
- */
-function updateRole(member) {
-  const presence = member.presence;
-  if (presence) {
-    if(presence.activities.length > 0) {
-      const game = presence.activities.find(
-        (activity) => activity.type === ActivityType.Playing
-        );
-        
-      if (game) {
-        console.log(`${member.displayName} is playing ${game.name}`);
-        // Lookup role
-        let role = member.guild.roles.cache.find(
-          (role) => role.name === game.name
-        );
-        if (!role) {
-          member.guild.roles.create()
-          const roleManager = new RoleManager(member.guild);
-          roleManager.create({ name: game.name, color: Colors.BL })
-            .then((newRole) => {
-              role = newRole;
-              console.log(`Created role ${role.name}`);
-            });
+    console.log("Updating all players for guild: " + guild.name);
+    guild.members.cache.forEach(function (member) {
+        if (!member.user.bot) {
+            updateRole(member);
         }
-        // Assign role
-        member.roles.add(role).then(() => {
-          console.log(`Assigned role ${role.name} to ${member.displayName}`);
-        });
-      }
-    }
-  }
+    });
 }
-
+function updateRole(member) {
+    var presence = member.presence;
+    if (presence) {
+        if (presence.activities.length > 0) {
+            var game_1 = presence.activities.find(function (activity) { return activity.type === discord_js_1.ActivityType.Playing; });
+            if (game_1) {
+                console.log("".concat(member.displayName, " is playing ").concat(game_1.name));
+                // Lookup role
+                var role_1 = member.guild.roles.cache.find(function (role) { return role.name === game_1.name; });
+                if (!role_1) {
+                    var options = {
+                        name: game_1.name,
+                        color: discord_js_1.Colors.Blue,
+                        mentionable: false,
+                    };
+                    member.guild.roles.create(options)
+                        .then(function (newRole) {
+                        role_1 = newRole;
+                        console.log("Created role ".concat(role_1.name));
+                    });
+                }
+                // Assign role
+                member.roles.add(role_1).then(function () {
+                    console.log("Assigned role ".concat(role_1.name, " to ").concat(member.displayName));
+                });
+            }
+        }
+    }
+}
 // const member = newPresence.member;
 // const oldGame = oldPresence.activities.find(
 //   (activity) => activity.type === "PLAYING"
@@ -83,18 +73,15 @@ function updateRole(member) {
 // const newGame = newPresence.activities.find(
 //   (activity) => activity.type === "PLAYING"
 // );
-
 // if (oldGame && !newGame) {
 //   // User stopped playing a game
 //   console.log(`${member.user.tag} stopped playing ${oldGame.name}`);
 //   // Remove role logic here
 // }
-
 // if (!oldGame && newGame) {
 //   // User started playing a game
 //   console.log(`${member.user.tag} started playing ${newGame.name}`);
 //   // Assign role logic here
 // }
-
 // Replace 'YOUR_BOT_TOKEN' with your actual bot token
 client.login(process.env.BOT_TOKEN);
