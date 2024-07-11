@@ -7,9 +7,6 @@ export type BaseLocale = 'en'
 
 export type Locales =
 	| 'en'
-	| 'fr'
-	| 'ru'
-	| 'uk'
 
 export type Translation = RootTranslation
 
@@ -129,6 +126,16 @@ type RootTranslation = {
 				 */
 				USERS: string
 			}
+		}
+		INFO: {
+			/**
+			 * i​n​f​o
+			 */
+			NAME: string
+			/**
+			 * W​a​n​n​a​ ​k​n​o​w​ ​m​o​r​e​ ​a​b​o​u​t​ ​A​u​t​o​G​a​m​e​B​o​t​a​s​d​f​?
+			 */
+			DESCRIPTION: string
 		}
 		HELP: {
 			/**
@@ -285,6 +292,16 @@ export type TranslationFunctions = {
 				 */
 				USERS: () => LocalizedString
 			}
+		}
+		INFO: {
+			/**
+			 * info
+			 */
+			NAME: () => LocalizedString
+			/**
+			 * Wanna know more about AutoGameBotasdf?
+			 */
+			DESCRIPTION: () => LocalizedString
 		}
 		HELP: {
 			/**

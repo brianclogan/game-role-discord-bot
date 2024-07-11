@@ -24,6 +24,9 @@ export class Guild extends CustomBaseEntity {
 	@Property()
     lastInteract: Date = new Date()
 
+	@Property()
+	create_roles: boolean = false
+
 }
 
 // ===========================================

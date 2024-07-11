@@ -50,6 +50,10 @@ const en = {
 				USERS: 'Users',
 			},
 		},
+		INFO: {
+			NAME: 'info',
+			DESCRIPTION: 'Wanna know more about AutoGameBotasdf?',
+		},
 		HELP: {
 			DESCRIPTION: 'Get global help about the bot and its commands',
 			EMBED: {

@@ -31,6 +31,7 @@ export default class InfoCommand {
 
 	@Slash({
 		name: 'info',
+		localizationSource: 'COMMANDS.INFO',
 	})
 	@Guard()
 	async info(
@@ -77,34 +78,7 @@ export default class InfoCommand {
 		const totalStats = await this.stats.getTotalStats()
 		fields.push({
 			name: 'Totals',
-			value: `**${totalStats.TOTAL_GUILDS}** guilds\n**${totalStats.TOTAL_USERS}** users\n**${totalStats.TOTAL_COMMANDS}** commands`,
-			inline: true,
-		})
-
-		/**
-		 * Bot version field
-		 */
-		fields.push({
-			name: 'Bot version',
-			value: `v${packageJson.version}`,
-			inline: true,
-		})
-
-		/**
-		 * Framework/template field
-		 */
-		fields.push({
-			name: 'Framework/template',
-			value: `[TSCord](https://github.com/barthofu/tscord) (*v${getTscordVersion()}*)`,
-			inline: true,
-		})
-
-		/**
-		 * Libraries field
-		 */
-		fields.push({
-			name: 'Libraries',
-			value: `[discord.js](https://discord.js.org/) (*v${packageJson.dependencies['discord.js'].replace('^', '')}*)\n[discordx](https://discordx.js.org/) (*v${packageJson.dependencies.discordx.replace('^', '')}*)`,
+			value: `**${totalStats.TOTAL_GUILDS}** guilds\n**${totalStats.TOTAL_USERS}** users`,
 			inline: true,
 		})
 

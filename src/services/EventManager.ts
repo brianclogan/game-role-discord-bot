@@ -12,6 +12,7 @@ export class EventManager {
 	}
 
 	register(eventName: string, callback: Function): void {
+		this.logger.log(`[EventRegister - ${eventName}]`, 'info', true)
 		this._events.set(eventName, [...(this._events.get(eventName) || []), callback])
 	}
 
